@@ -23,6 +23,22 @@ describe('VehicleId', () => {
     })
   })
 
+  describe('getId', () => {
+    it('returns the id string', () => {
+      const vehicleId = VehicleId.from('AB-123-CD')
+
+      expect(vehicleId.getId()).toBe('AB-123-CD')
+    })
+  })
+
+  describe('asString', () => {
+    it('returns the id string', () => {
+      const vehicleId = VehicleId.from('AB-123-CD')
+
+      expect(vehicleId.asString()).toBe('AB-123-CD')
+    })
+  })
+
   describe('equals', () => {
     it('returns true for identical ids', () => {
       const a = VehicleId.from('AB-123-CD')

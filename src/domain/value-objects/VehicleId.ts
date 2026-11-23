@@ -14,7 +14,11 @@ export class VehicleId {
     return new VehicleId({ id })
   }
 
-  getId() {
+  getId(): string {
+    return this.id
+  }
+
+  asString(): string {
     return this.id
   }
 
