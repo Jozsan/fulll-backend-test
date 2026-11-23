@@ -8,7 +8,7 @@
   "main": "index.js",
   "scripts": {
     "test": "cucumber-js --profile default",
-    "test:ut": "vitest"
+    "test:ut": "tsc --noEmit && vitest"
   },
   "devDependencies": {
     "@types/node": "^26.6.6",
