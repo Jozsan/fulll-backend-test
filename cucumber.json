@@ -8,7 +8,7 @@
     "requireModule": ["tsx/cjs"],
     "format": ["progress"]
   },
-  "critical-postgres": {
+  "critical": {
     "paths": ["features/**/*.feature"],
     "require": [
       "features/support/**/*.ts",
