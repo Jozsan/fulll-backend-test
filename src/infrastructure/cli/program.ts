@@ -5,6 +5,7 @@ import { Location } from '../../domain/value-objects/Location'
 import { CreateFleetCommand } from '../../application/commands/create-fleet/CreateFleetCommand'
 import { RegisterVehicleCommand } from '../../application/commands/register-vehicle/RegisterVehicleCommand'
 import { ParkVehicleCommand } from '../../application/commands/park-vehicle/ParkVehicleCommand'
+import { GetVehicleLocationQuery } from '../../application/queries/get-vehicle-location/GetVehicleLocationQuery'
 import { CliDependencies } from './dependencies'
 import { UserId } from '../../domain/value-objects/UserId'
 
@@ -52,6 +53,22 @@ export function buildProgram(deps: CliDependencies): Command {
         ))
         await deps.parkVehicleHandler.execute(command)
         console.log(`Vehicle ${vehiclePlateNumber} parked at (${lat}, ${lng})`)
+      }),
+    )
+
+  program
+    .command('locate-vehicle')
+    .argument('<vehiclePlateNumber>')
+    .action((vehiclePlateNumber: string) =>
+      run(async () => {
+        const query = new GetVehicleLocationQuery(VehicleId.from(vehiclePlateNumber))
+        const location = await deps.getVehicleLocationHandler.execute(query)
+
+        if (!location) {
+          console.log(`Vehicle ${vehiclePlateNumber} has no known location yet.`)
+        } else {
+          console.log(`Vehicle ${vehiclePlateNumber} is at (${location.getLatitude()}, ${location.getLongitude()})`)
+        }
       }),
     )
 
