@@ -7,6 +7,7 @@ import { FleetId } from '../../../../src/domain/value-objects/FleetId'
 import { VehicleId } from '../../../../src/domain/value-objects/VehicleId'
 import { Location } from '../../../../src/domain/value-objects/Location'
 import { Fleet } from '../../../../src/domain/entities/Fleet'
+import { UserId } from '../../../../src/domain/value-objects/UserId'
 import { FleetNotFoundError } from '../../../../src/domain/errors/FleetNotFoundError'
 import { VehicleNotRegisteredError } from '../../../../src/domain/errors/VehicleNotRegisteredError'
 import { InMemoryFleetRepository } from '../../../../src/infrastructure/persistence/in-memory/InMemoryFleetRepository'
@@ -28,7 +29,7 @@ describe('ParkVehicleCommandHandler', () => {
   })
 
   it('throws when the vehicle is not registered in the fleet', async () => {
-    const fleet = Fleet.from({ id: FleetId.from('fleet-1') })
+    const fleet = Fleet.from({ id: FleetId.from('fleet-1'), ownerId: UserId.from('user-1') })
     const fleetRepository = { findById: vi.fn().mockResolvedValue(fleet) }
     const vehicleRepository = { findById: vi.fn(), save: vi.fn() }
     const handler = new ParkVehicleCommandHandler({ fleetRepository, vehicleRepository })
@@ -53,8 +54,8 @@ describe('ParkVehicleCommandHandler', () => {
     const vehicleId = VehicleId.from('AB-123-CD')
     const location = Location.from({ latitude: 48.8566, longitude: 2.3522 })
 
-    await fleetRepository.save(Fleet.from({ id: fleetAId }))
-    await fleetRepository.save(Fleet.from({ id: fleetBId }))
+    await fleetRepository.save(Fleet.from({ id: fleetAId, ownerId: UserId.from('user-1') }))
+    await fleetRepository.save(Fleet.from({ id: fleetBId, ownerId: UserId.from('user-1') }))
     await registerHandler.execute(new RegisterVehicleCommand(fleetAId, vehicleId))
     await registerHandler.execute(new RegisterVehicleCommand(fleetBId, vehicleId))
 

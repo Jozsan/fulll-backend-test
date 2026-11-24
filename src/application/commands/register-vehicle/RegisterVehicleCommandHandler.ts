@@ -25,8 +25,8 @@ export class RegisterVehicleCommandHandler {
 
     const vehicle = (await this.vehicleRepository.findById(command.vehicleId)) ?? Vehicle.from({ id: command.vehicleId, location: null })
 
-    await this.fleetRepository.save(fleet)
     await this.vehicleRepository.save(vehicle)
+    await this.fleetRepository.save(fleet)
   }
 }
 

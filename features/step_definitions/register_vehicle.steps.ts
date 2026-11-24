@@ -3,19 +3,20 @@ import assert from 'node:assert'
 import { CustomWorld } from '../support/world'
 import { Fleet } from '../../src/domain/entities/Fleet'
 import { FleetId } from '../../src/domain/value-objects/FleetId'
+import { UserId } from '../../src/domain/value-objects/UserId'
 import { VehicleId } from '../../src/domain/value-objects/VehicleId'
 import { RegisterVehicleCommand } from '../../src/application/commands/register-vehicle/RegisterVehicleCommand'
 import { VehicleAlreadyRegisteredError } from '../../src/domain/errors/VehicleAlreadyRegisteredError'
 
 Given('my fleet', async function (this: CustomWorld) {
   this.fleetId = FleetId.from('fleet-1')
-  this.fleet = Fleet.from({ id: this.fleetId })
+  this.fleet = Fleet.from({ id: this.fleetId, ownerId: UserId.from('user-1') })
   await this.fleetRepository.save(this.fleet)
 })
 
 Given('the fleet of another user', async function (this: CustomWorld) {
   this.otherFleetId = FleetId.from('fleet-2')
-  this.otherFleet = Fleet.from({ id: this.otherFleetId })
+  this.otherFleet = Fleet.from({ id: this.otherFleetId, ownerId: UserId.from('user-2') })
   await this.fleetRepository.save(this.otherFleet)
 })
 
