@@ -1,0 +1,41 @@
+import { describe, it, expect, beforeEach } from 'vitest'
+import { Fleet } from '../../../src/domain/entities/Fleet'
+import { VehicleId } from '../../../src/domain/value-objects/VehicleId'
+import { FleetId } from '../../../src/domain/value-objects/FleetId'
+import { VehicleAlreadyRegisteredError } from '../../../src/domain/errors/VehicleAlreadyRegisteredError'
+
+describe('Fleet', () => {
+  let fleet: Fleet
+  let vehicleId: VehicleId
+
+  beforeEach(() => {
+    fleet = Fleet.from({ id: FleetId.from('fleet-1') })
+    vehicleId = VehicleId.from('AB-123-CD')
+  })
+
+  describe('registerVehicle', () => {
+    it('registers a new vehicle', () => {
+      fleet.registerVehicle(vehicleId)
+
+      expect(fleet.hasVehicle(vehicleId)).toBe(true)
+    })
+
+    it('throws when the vehicle is already registered', () => {
+      fleet.registerVehicle(vehicleId)
+
+      expect(() => fleet.registerVehicle(vehicleId)).toThrow(VehicleAlreadyRegisteredError)
+    })
+  })
+
+  describe('hasVehicle', () => {
+    it('returns true when the vehicle is registered', () => {
+      fleet.registerVehicle(vehicleId)
+
+      expect(fleet.hasVehicle(vehicleId)).toBe(true)
+    })
+
+    it('returns false when the vehicle is not registered', () => {
+      expect(fleet.hasVehicle(vehicleId)).toBe(false)
+    })
+  })
+})
