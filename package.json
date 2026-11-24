@@ -13,16 +13,24 @@
     "build": "tsc --project tsconfig.build.json",
     "test": "cucumber-js --profile default",
     "test:ut": "tsc --noEmit && vitest",
-    "cli": "node -r tsx/cjs src/infrastructure/cli/index.ts"
+    "cli": "node --env-file=.env -r tsx/cjs src/infrastructure/cli/index.ts",
+    "dev:services": "docker-compose -f dev.compose.yaml up",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "node --env-file=.env -r tsx/cjs src/infrastructure/persistence/postgres/migrate.ts",
+    "test:critical:postgres": "PERSISTENCE=postgres node --env-file=.env -r tsx/cjs node_modules/.bin/cucumber-js --profile critical-postgres"
   },
   "devDependencies": {
     "@types/node": "^26.6.6",
+    "@types/pg": "^8.23.1",
+    "drizzle-kit": "^0.31.11",
     "tsx": "^4.23.15",
     "typescript": "^7.0.2",
     "vitest": "^5.1.1"
   },
   "dependencies": {
     "@cucumber/cucumber": "^13.3.0",
-    "commander": "^15.1.0"
+    "commander": "^15.1.0",
+    "drizzle-orm": "^0.45.4",
+    "pg": "^8.23.1"
   }
 }

@@ -1,3 +1,3 @@
-#!/usr/bin/env node
+#!/usr/bin/env -S node --env-file=.env
 require('tsx/cjs')
 require('./src/infrastructure/cli/index.ts')

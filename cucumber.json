@@ -7,5 +7,15 @@
     ],
     "requireModule": ["tsx/cjs"],
     "format": ["progress"]
+  },
+  "critical-postgres": {
+    "paths": ["features/**/*.feature"],
+    "require": [
+      "features/support/**/*.ts",
+      "features/step_definitions/**/*.ts"
+    ],
+    "requireModule": ["tsx/cjs"],
+    "format": ["progress"],
+    "tags": "@critical"
   }
 }
