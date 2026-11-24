@@ -7,11 +7,13 @@
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
+    "build": "tsc --project tsconfig.build.json",
     "test": "cucumber-js --profile default",
     "test:ut": "tsc --noEmit && vitest"
   },
   "devDependencies": {
     "@types/node": "^26.6.6",
+    "tsx": "^4.23.15",
     "typescript": "^7.0.2",
     "vitest": "^5.1.1"
   },
