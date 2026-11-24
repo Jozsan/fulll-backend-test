@@ -6,10 +6,14 @@
   "author": "",
   "type": "commonjs",
   "main": "index.js",
+  "bin": {
+    "fleet": "./fleet"
+  },
   "scripts": {
     "build": "tsc --project tsconfig.build.json",
     "test": "cucumber-js --profile default",
-    "test:ut": "tsc --noEmit && vitest"
+    "test:ut": "tsc --noEmit && vitest",
+    "cli": "node -r tsx/cjs src/infrastructure/cli/index.ts"
   },
   "devDependencies": {
     "@types/node": "^26.6.6",
@@ -18,6 +22,7 @@
     "vitest": "^5.1.1"
   },
   "dependencies": {
-    "@cucumber/cucumber": "^13.3.0"
+    "@cucumber/cucumber": "^13.3.0",
+    "commander": "^15.1.0"
   }
 }
