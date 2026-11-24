@@ -40,12 +40,6 @@ Apply the migrations:
 npm run db:migrate
 ```
 
-If the Drizzle schema changes, generate a new migration:
-
-```bash
-npm run db:generate
-```
-
 ## CLI Usage
 
 ```bash
