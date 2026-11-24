@@ -36,5 +36,5 @@ export class Vehicle {
 
 export interface VehicleProps {
   id: VehicleId
-  location: null
+  location: Location | null
 }

@@ -13,7 +13,7 @@ export class Fleet {
   private constructor(props: FleetProps) {
     this.id = props.id
     this.ownerId = props.ownerId
-    this.vehicleIds = new Set()
+    this.vehicleIds = new Set(props.vehicleIds?.map((vehicleId) => vehicleId.asString()))
   }
 
   static from(props: FleetProps): Fleet {
@@ -26,6 +26,10 @@ export class Fleet {
 
   getOwnerId(): UserId {
     return this.ownerId
+  }
+
+  getVehicleIds(): VehicleId[] {
+    return [...this.vehicleIds].map((vehicleId) => VehicleId.from(vehicleId))
   }
 
   registerVehicle(vehicleId: VehicleId): void {
@@ -42,4 +46,5 @@ export class Fleet {
 export interface FleetProps {
   id: FleetId
   ownerId: UserId
+  vehicleIds?: VehicleId[]
 }
