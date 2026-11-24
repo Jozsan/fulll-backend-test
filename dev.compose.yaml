@@ -1,0 +1,21 @@
+name: fulll-dev
+volumes:
+  database-data:
+services:
+  database:
+    image: postgres:18
+    healthcheck:
+      test: ['CMD', 'psql', '-U', 'postgres', '-d', 'fulll', '-l']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: fulll
+      TZ: UTC
+    ports:
+      - '5432:5432'
+    volumes:
+      - database-data:/var/lib/postgresql
+    network_mode: 'bridge'
