@@ -48,4 +48,26 @@ describe('Fleet', () => {
       expect(fleet.hasVehicle(vehicleId)).toBe(false)
     })
   })
+
+  describe('getVehicleIds', () => {
+    it('returns an empty array when no vehicle is registered', () => {
+      expect(fleet.getVehicleIds()).toEqual([])
+    })
+
+    it('returns the registered vehicle ids', () => {
+      fleet.registerVehicle(vehicleId)
+
+      expect(fleet.getVehicleIds().map((id) => id.asString())).toEqual([vehicleId.asString()])
+    })
+
+    it('reconstructs a fleet with its existing vehicle ids', () => {
+      const reconstructed = Fleet.from({
+        id: FleetId.from('fleet-3'),
+        ownerId: UserId.from('user-1'),
+        vehicleIds: [vehicleId],
+      })
+
+      expect(reconstructed.hasVehicle(vehicleId)).toBe(true)
+    })
+  })
 })
