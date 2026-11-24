@@ -2,6 +2,7 @@ import { describe, it, expect, beforeEach } from 'vitest'
 import { Fleet } from '../../../src/domain/entities/Fleet'
 import { VehicleId } from '../../../src/domain/value-objects/VehicleId'
 import { FleetId } from '../../../src/domain/value-objects/FleetId'
+import { UserId } from '../../../src/domain/value-objects/UserId'
 import { VehicleAlreadyRegisteredError } from '../../../src/domain/errors/VehicleAlreadyRegisteredError'
 
 describe('Fleet', () => {
@@ -9,8 +10,17 @@ describe('Fleet', () => {
   let vehicleId: VehicleId
 
   beforeEach(() => {
-    fleet = Fleet.from({ id: FleetId.from('fleet-1') })
+    fleet = Fleet.from({ id: FleetId.from('fleet-1'), ownerId: UserId.from('user-1') })
     vehicleId = VehicleId.from('AB-123-CD')
+  })
+
+  describe('getOwnerId', () => {
+    it('returns the owner when the fleet was created with one', () => {
+      const ownerId = UserId.from('user-1')
+      const ownedFleet = Fleet.from({ id: FleetId.from('fleet-2'), ownerId })
+
+      expect(ownedFleet.getOwnerId().equals(ownerId)).toBe(true)
+    })
   })
 
   describe('registerVehicle', () => {
